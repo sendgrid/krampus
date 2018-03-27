@@ -1,0 +1,10 @@
+{"tasks":[
+  {
+    "action_time": 0,
+    "aws_resource_name": "arn:aws:ec2:us-east-2:940131803399:security-group/sg-bb979ad3",
+    "aws_region": "us-east-2",
+    "aws_object_type": "ec2",
+    "action": "kill"
+  }
+]}
+

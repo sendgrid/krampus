@@ -1,0 +1,19 @@
+language: python
+sudo: false
+python:
+  - '2.7'
+
+install:
+  - pip install -r requirements.txt
+  - pip install pycodestyle
+  - pip install pylint
+
+script:
+  - bandit -r -ll -ii -x venv/ .
+  - pycodestyle --exclude=venv  
+  - pylint -E --ignore venv .
+
+notifications:
+  hipchat:
+    rooms:
+      secure: MUVbXO8eG8Lw0mp4jrWqusVGFJ1QVFuPomCNNzzt5Jk/Dyxs5UJKEjf15cSeFGb4MhUtw/bR4Tb15iJxREvVp35ao8OHcnyqSPEApSex5GBg2T+R8prUGMjHJMq6OPVO7DuZfeHzdwMVUn55FuuOk8zoDUxBGAwpVk+rns79X37jYhabawXT7xhJUStx91tZDfcC+Bcd+I7bLF7AaPiQfITH6tnA6JKft7kcA74hwNYHngNQf68tc4eeoPZQ/JKyBNC7l95W3t10LmL+IvEC5cKxHuYQBefWyPewb68Fw75VIyu50KaLwFlgdqW/c7gf4ZCLP2l/cvKhdQ7zKb1H2U5h3DpZOlx0EiRIg5hsbzKpi/oQlSCFpBCTqr479G5yGGJK7CkEhIA3rpWnJRoJCo5KVUbzJf6iABZf93tcB682cYkHmn+K9vBrjHZLgLluRh5XMJrsux32jIpINNWgqpxu1rsNZCffVZHVQxkYsu/v9wqstRF2zbQDQ6wDTQ39beoWSqS5pBixrY/PFCQFdDKZixX2G0xxX4bGfyzDVSa2Nkd/vjGKgl6oIQln00DqsgmrvAYU22xAm8yO4yWKGUq9G3hiUQLQgK17lpAX3949wjU8VtpadyMgbt9wRRABZspym9eWY+aL6ZWu2j4gRDCFMul1pfYqGc18TApvA9M=

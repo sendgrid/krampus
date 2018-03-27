@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+echo "[+] we're about to build you a krampus"
+echo "[i] running a security scan..."
+bandit -r . -x venv
+printf '\n[i] starting build...'
+mkdir dist
+rsync -a --exclude='dist' . dist/
+rm -rf dist/boto*
+cd dist
+zip -9 -r krampus.zip .
+cd ..
+mv dist/krampus.zip .
+echo "[i] cleaning up..."
+rm -rf dist
+echo "[+] done! krampus.zip ready for Lambda"
