@@ -152,7 +152,7 @@ class KTask():
                 bucket = arn_obj.resource
                 remove_all = False
                 try:
-                    s3_permission = self.job_params[KEYS['s3_permission']]
+                    s3_permissions = self.job_params[KEYS['s3_permission']]
                     s3_principal = self.job_params[KEYS['s3_principal']]
                     s3_principal_type = "Group" if self.job_params[KEYS['s3_principal']].find("http") > -1 else "CanonicalUser"
                 except KeyError:
@@ -160,10 +160,10 @@ class KTask():
                     remove_all = True
                 if self.action == "disable" and not remove_all:
                     KLog.log(
-                        "deleting permission '%s' for principal '%s' on bucket '%s'"
-                        % (s3_permission, s3_principal, bucket)
+                        "deleting permissions '%s' for principal '%s' on bucket '%s'"
+                        % (", ".join(map(str, s3_permissions)), s3_principal, bucket)
                     )
-                    resp = s3.S3(bucket, self.session).deleteGrant(s3_principal, s3_principal_type, s3_permission)
+                    resp = s3.S3(bucket, self.session).deleteGrant(s3_principal, s3_principal_type, s3_permissions)
                 elif self.action == "disable" and remove_all:
                     KLog.log("removing all permissions on '%s'" % bucket, "info")
                     resp = s3.S3(bucket, self.session).deleteAllGrants()
