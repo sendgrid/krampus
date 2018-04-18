@@ -26,32 +26,38 @@ class S3():
 
     # remove all grants
     def deleteAllGrants(self):
-        return self.bucket.put(AccessControlPolicy={
-            "Grants": [],
-            "Owner": self.bucket.owner})  # alternate remediation could be actually changing owner
+        return self.bucket.put(
+            AccessControlPolicy={
+                "Grants": [],
+                "Owner": self.bucket.owner
+            }
+        ) # done
 
     # do some ACL magic to pull access to bucket
-    def deleteGrant(self, principal, principal_type, perm):
-        perm = perm.upper()
+    def deleteGrant(self, principal, principal_type, perms):
         acl = []
         for g in self.getGrants():
             if g['Grantee']['Type'] == principal_type:  # matched on type at least
                 if principal_type == "CanonicalUser":
-                    if g['Grantee']['ID'] == principal and g['Permission'] == perm:
+                    if g['Grantee']['ID'] == principal and g['Permission'] in perms:
                         # we found the offending permission, skip adding to new ACL
                         continue
                 elif principal_type == "Group":
-                    if g['Grantee']['URI'] == principal and g['Permission'] == perm:
+                    if g['Grantee']['URI'] == principal and g['Permission'] in perms:
                         # we found it, skip to prevent it being added
                         continue
                 else:
                     # not aware of any other principal types, but best not to assume
                     KLog.log("krampus cannot modify ACEs for principal type: %s" % principal_type, "critical")
                     return False
-            # we maintain a new list to pass to the BucketAcl.put method
-            # if we made it here, then we want to keep the ACE 'g'
-            acl.append(g)
+                # we maintain a new list to pass to the BucketAcl.put method
+                # if we made it here, then we want to keep the ACE 'g'
+                if not g in acl:
+                  acl.append(g)
         # it's over, update the ACL on AWS' side
-        return self.bucket.put(AccessControlPolicy={
-            "Grants": acl,
-            "Owner": self.bucket.owner})  # alternate remediation could be changing owner
+        return self.bucket.put(
+            AccessControlPolicy={
+                "Grants": acl,
+                "Owner": self.bucket.owner
+            }
+        ) # alternate remediation could be changing owner

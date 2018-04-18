@@ -3,6 +3,10 @@ krampus CHANGELOG
 
 This file shows a change history for the krampus project
 
+0.3.5
+------
+- [Chase] allow s3 kinder to accept multiple permissions to be removed from s3 object; fix dist script
+
 0.3.4
 ------
 - [Chase] various fixes and improvements in preparation for open source, thanks @MKgridSec

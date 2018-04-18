@@ -6,6 +6,7 @@ bandit -r . -x venv
 printf '\n[i] starting build...'
 mkdir dist
 rsync -a --exclude='dist' . dist/
+rsync -a venv/lib/python2.7/site-packages/* dist/
 rm -rf dist/boto*
 cd dist
 zip -9 -r krampus.zip .
