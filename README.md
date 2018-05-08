@@ -1,6 +1,8 @@
 ## What is Krampus
 Krampus is a security solution designed to delete and disable various AWS objects such as EC2 instances, S3 buckets, etc. It accepts a simple list of objects to action in the form of a JSON tasks file, and can be also be used as a cost-control tool. Krampus itself is designed to eliminate threats post by security issues, and does not actually decide whether something is insecure. For that we recommend [Netflix's Security Monkey](https://github.com/Netflix/security_monkey).
 
+![krampus flowchart](/docs/krampus.png)
+
 ## How to Krampus
 Setting up Krampus is generally pretty simple and should only take a few minutes. It can be run locally from the command line or from Lambda in AWS. The process involves setting up the correct IAM permissions for Krampus to run, and using a method of your choice to populate an S3 bucket with a JSON tasks file that Krampus can understand (we like [Security Monkey](https://github.com/Netflix/security_monkey)). The flow chart below demonstrates how we have chosen to set this up, though any method that generates a tasks file Krampus can understand should be fine.
 

@@ -1,0 +1,7 @@
+{
+  "Whitelist": {
+    "arn:aws..." : "some comment",
+    "arn:aws:s3:region:account-id:my-bucket" : "my-bucket should be exempt from krampus",
+    "arn:aws:ec2:region:account-id:instance/instance-id" : "an important ec2 instance"
+  }
+}
