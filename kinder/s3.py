@@ -52,8 +52,8 @@ class S3():
                     return False
                 # we maintain a new list to pass to the BucketAcl.put method
                 # if we made it here, then we want to keep the ACE 'g'
-                if not g in acl:
-                  acl.append(g)
+                if g not in acl:
+                    acl.append(g)
         # it's over, update the ACL on AWS' side
         return self.bucket.put(
             AccessControlPolicy={
