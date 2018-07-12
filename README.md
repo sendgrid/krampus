@@ -181,7 +181,25 @@ At this point, you should be able to simply run the script.
 ```
 If any jobs have been uploaded to the tasks file, they will be actioned. Congratulations--you did it!
 
-### Lambda deploy
+## Terraform deploy to AWS
+To make deployment more friendly, Krampus now comes with a set of Terraform modules that streamline the process. To get started, change into the terraform directory and initialize the modules.
+```
+terraform init
+terraform get
+```
+In each of the three modules(IAM, Lambda and S3) there is a variables.tf file that will need a little bit of setup. Change these values to match your desired config, such as choosing the role name, bucket name, etc.
+
+Now, you're ready to get started. Use Terraform to validate that you are ok with the changes that are to be applied.
+```
+terraform plan
+````
+If everything looks good, go ahead and apply the changes to your infrastructure.
+```
+terraform apply
+```
+You're done!
+
+### Manual deploy to AWS
 Using the included Lambda distribution packaging script, going serverless could not be easier. First, we need to create the zipped distribution package to upload as the Lambda function.
 ```
 ./mkdist
@@ -192,7 +210,7 @@ In the management screen, there are just a couple more things that need to be se
 
 The same environment variable requirements as above in local setup are also needed for Lambda. Under "Basic settings," increase the timeout from 3 seconds to 60. Krampus can complete about a task a second, so you can tweak this value to roughly match the maximum number of expected jobs for any given run.
 
-In the future, Krampus will have a friendlier deploy process through Terraform.
+You will also need to manually set up Krampus' bucket. After you've created it, make sure to update the KRAMPUS_BUCKET environment variable to tell Krampus where to find it. Make sure the bucket name matches the one specified in the S3 policy that was attached to the Krampus role earlier.
 
 At this point you should be good to go. Try adding a few jobs to your task file and hitting the "test" button on the Lambda function's information page.
 
