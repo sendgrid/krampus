@@ -1,0 +1,32 @@
+{
+    "tasks": [
+      {
+        "s3_principal": "http://acs.amazonaws.com/groups/global/AllUsers",
+        "s3_permission": ["READ_ACP", "WRITE"],
+        "action_time": 0,
+        "aws_resource_name": "arn:aws:s3:region:account-id:my-bucket",
+        "action": "disable",
+        "_comments": "this job will remove the READ_ACP and WRITE permissions for the AllUsers group"
+      }, {
+        "aws_resource_name": "arn:aws:ec2:region:account-id:volume/volume-id",
+        "action": "kill",
+        "action_time": 1525789927,
+        "_comments": "this job will delete the EBS volume on krampus' first run after action_time"
+      }, {
+        "aws_resource_name": "arn:aws:ec2:region:account-id:instance/instance-id",
+        "action": "disable",
+        "action_time": 0,
+        "_comments": "this job will stop the EC2 instance on krampus' next run"
+      }, {
+        "aws_resource_name": "arn:aws:iam::account-id:user/user-name",
+        "action": "kill",
+        "action_time": 1525789927,
+        "_comments": "this job will delete the IAM user on krampus' first run after action_time"
+      }, {
+        "aws_resource_name": "arn:aws:lambda:region:account-id:function:function-name",
+        "action": "kill",
+        "action_time": 0,
+        "_comments": "this job will delete the lambda function on krampus' next run"
+      }
+    ]
+}
