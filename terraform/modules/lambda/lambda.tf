@@ -5,6 +5,7 @@ resource "aws_lambda_function" "krampus" {
   handler          = "krampus.main"
   source_code_hash = "${base64sha256(file("../krampus.zip"))}"
   runtime          = "python2.7"
+  timeout          = 300
 
   tags { }
 
