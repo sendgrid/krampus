@@ -1,5 +1,8 @@
 ## What is Krampus
+![krampus](/docs/Krampus-logo.png)
 Krampus is a security solution designed to delete and disable various AWS objects such as EC2 instances, S3 buckets, etc. It accepts a simple list of objects to action in the form of a JSON tasks file, and can be also be used as a cost-control tool. Krampus itself is designed to eliminate threats post by security issues, and does not actually decide whether something is insecure. For that we recommend [Netflix's Security Monkey](https://github.com/Netflix/security_monkey).
+
+![krampus overview](/docs/BAD_CONFIG.gif)
 
 ![krampus flowchart](/docs/krampus.png)
 
