@@ -148,6 +148,22 @@ Krampus will need permission to access its own S3 bucket for collecting tasks an
   ]
 }
 ```
+### Account Mapping Setup (Slack)
+If your Krampus needs to act on numerous accounts with varying teams that need to see what is happening with their resources via Slack, a JSON file can be uploaded to S3 that contains the necessary information to do so. Provide the bucket and key with the environment variables `AWS_ACCOUNTMAPPING_BUCKET` and `AWS_ACCOUNTMAPPING_KEY`, and ensure that your policy allows `ListBucket` and `GetObject` to S3 (if it differs from `KRAMPUS_BUCKET`).
+
+If account mapping is not needed, the Slack channel defaults to "#krampus" unless the value of `SLACK_CHANNEL_DEFAULT_NAME` is set. 
+
+```json
+[
+  {
+    "AccountName": "prod_website",
+    "AccountNumber": "012345678912",
+    "ContactEmail": "prodfolks@example.com",
+    "SlackChannel": "#krampus",
+  },
+  ...
+]
+```
 ### Installation and virtual environment setup
 In order to run Krampus, you will need a 2.7.x version of Python. Other versions in the 2.x series may work, but have not been tested. Virtualenv is not required, but definitely recommended.
 
@@ -175,8 +191,10 @@ DEFAULT_REGION=default_region # default region to look in, something like us-eas
 KRAMPUS_BUCKET=krampus_bucket_name # the name of the S3 bucket where the tasks file can be found
 KRAMPUS_ROLE_NAME=role_name # the name of the role krampus will assume
 TASKS_FILE_KEY=tasks_file # the object key in S3 where the JSON tasks can be downloaded
-HIPCHAT_ACCESS_TOKEN=hipchat_api_token # if you want HipChat integration, define this var
-HIPCHAT_ROOM=room_id # required to use HipChat, the room id to post messages to
+SLACK_WEBHOOK_URL=slack_webhook_url # Webhook URL for Slack 
+SLACK_DEFAULT_ROOM=room_name # The default room name to use
+AWS_ACCOUNTMAPPING_BUCKET=bucket # The bucket if an account mapping file is used
+AWS_ACCOUNTMAPPING_KEY=account-map.json # The filename key if an account mapping file is used
 ```
 At this point, you should be able to simply run the script.
 ```

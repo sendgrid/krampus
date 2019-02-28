@@ -22,16 +22,18 @@ class KSession(object):
     # create a new session
     def __init__(self, account_id, role_name):
         # before anything see if we already have this session
+
         if account_id in sessions:
             self.session = sessions[account_id]
             return None
         # otherwise lets get a session going
         sts = boto3.client("sts")
-        arn_str = "arn:aws:iam::%s:role/%s" % (account_id, role_name)
+        arn_str = "arn:aws:iam::{0}:role/{1}".format(account_id, role_name)
+
         try:
             sess = sts.assume_role(RoleArn=arn_str, RoleSessionName=account_id)
         except ClientError as e:  # prob does not have perms to assume
-            print "[!] issue assuming role %s: %s" % (arn_str, str(e))
+            print "[!] issue assuming role {0}: {1}".format(arn_str, str(e))
             KLog.log("issue assuming role {0}: {1}".format(arn_str, str(e)), "critical")
             return None
         # if that works lets save the session

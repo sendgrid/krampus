@@ -10,18 +10,14 @@ from lib.krampus_logging import KLog
 
 
 class IAM():
-    def __init__(self, iam_resource, sess, region="us-east-1"):
+    def __init__(self, iam_resource, iam_resource_type, sess, region="us-east-1"):
         # we'll inevitably make many calls with this module, track whether they work
         self.responses = []
         # unfortunately we need both the low-level client, and the resource stuff
         self.conn = sess.resource("iam")
         self.resource = sess.client("iam")
-        # determine what type of resource we are working with
-        try:
-            self.iam_type = iam_resource.split("/")[0]
-            self.iam_obj = iam_resource.split("/")[1]
-        except:
-            raise Warning("unable to determine iam object type: %s" % iam_resource)
+        self.iam_type = iam_resource_type
+        self.iam_obj = iam_resource 
 
     # disable iam resource. aws makes you detach EVERYTHING first *sigh*
     def disable(self):
