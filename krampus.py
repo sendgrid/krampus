@@ -17,6 +17,7 @@ import time
 from lib.krampus_tasks import *
 import lib.krampus_logging
 
+
 class Krampus():
     # Setup basic things we need and instantiate logger and krampus_tasks
     def __init__(self, region, bucket_name, key, whitelist, krampus_role):
@@ -46,6 +47,7 @@ class Krampus():
     # Update tasks, removing completed and keeping deferred
     def updateTaskList(self):
         self.kt.rebuildTaskList()
+
 
 # Collects information required to run, otherwise set to preset values
 def main(event, context):

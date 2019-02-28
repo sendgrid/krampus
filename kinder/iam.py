@@ -17,7 +17,7 @@ class IAM():
         self.conn = sess.resource("iam")
         self.resource = sess.client("iam")
         self.iam_type = iam_resource_type
-        self.iam_obj = iam_resource 
+        self.iam_obj = iam_resource
 
     # disable iam resource. aws makes you detach EVERYTHING first *sigh*
     def disable(self):

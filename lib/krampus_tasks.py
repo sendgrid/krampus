@@ -47,6 +47,7 @@ KEYS = {
 
 SERVICES = ["ec2", "s3", "iam", "rds", "lambda"]
 
+
 # krampus takes orders
 class KTask():
     def __init__(self, region, bucket_name, logger=False, whitelist=None, krampus_role="krampus"):
@@ -277,7 +278,6 @@ class KTask():
             self.resource_type = arn.resource_type
             self.service = arn.service
     # end ARN class
-
 
     # I WANT THE TASKS
     def getTasks(self, key):

@@ -23,6 +23,7 @@ accountmapping_key = None
 webhook_url = None
 default_channel = None
 
+
 # yeah this is a mess and should have been fully static sometimes
 # it is easier to just avoid side effects, you know?
 class KLog(object):
@@ -115,11 +116,11 @@ class KLog(object):
                 "text": message,
             },
             "channel": channel,
-            "attachments":[
+            "attachments": [
                 {
                     "fallback": "Krampus",
                     "color": color,
-                    "fields":[
+                    "fields": [
                         {
                             "title": "Krampus",
                             "value": message,
@@ -156,6 +157,7 @@ class KLog(object):
         # now we can worry about putting to s3
         resp = self.bucket.Object(self.key).put(Body=buff)
         return resp
+
 
 if os.getenv("AWS_ACCOUNTMAPPING_BUCKET"):
     accountmapping_bucket = os.getenv("AWS_ACCOUNTMAPPING_BUCKET")
