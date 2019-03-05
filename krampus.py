@@ -42,7 +42,7 @@ class Krampus():
             except Exception as e:
                 # TODO: Resolve bugs in resource complete() methods to avoid deferral
                 self.kt.deferred_tasks.append(task.as_json)
-                KLog.log("could not complete task: {0}".format(str(e)), "critical")
+                KLog.log("Unable to complete task: {0}".format(str(e)), "critical")
 
     # Update tasks, removing completed and keeping deferred
     def updateTaskList(self):

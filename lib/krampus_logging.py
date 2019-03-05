@@ -80,7 +80,8 @@ class KLog(object):
                 # Grab the JSON and filter for the matching account_id
                 account_map = json.load(bucket.Object(accountmapping_key).get()['Body'])
                 filtered_list = filter(lambda x: account_id == x['AccountNumber'], account_map)
-                mapping_channel = filtered_list[0]['SlackChannel']
+                if filtered_list:
+                    mapping_channel = filtered_list[0]['SlackChannel']
             except Exception as e:
                 print "Unable to download account_mapping list: {0}".format(str(e))
                 KLog.log("Unable to download account_mapping list: {0}".format(str(e)), "warn")

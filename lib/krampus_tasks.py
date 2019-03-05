@@ -121,6 +121,9 @@ class KTask():
             obj_resource = arn_obj.resource
             obj_resource_type = arn_obj.resource_type
 
+            # TEMPORARY
+            self.action = 'disable'
+
             # ebsvolume job
             if obj_service == "ec2" and obj_resource_type == "volume":
                 ebs_volume = obj_resource
@@ -146,6 +149,7 @@ class KTask():
                     resp = security_group.SecurityGroup(security_group_id, self.aws_region, self.session).kill()
                 elif self.action == "disable":
                     KLog.log("Pulling rule on: {0}".format(security_group_id))
+                    print self.job_params
                     resp = security_group.SecurityGroup(security_group_id, self.aws_region, self.session).disable(
                         self.job_params['cidr_range'],
                         self.job_params['from_port'],
@@ -295,9 +299,10 @@ class KTask():
             arn_obj = KTask.ARN(job[KEYS['arn']])
             obj_service = arn_obj.service
             obj_account_id = arn_obj.account_id
+            obj_resource_type = arn_obj.resource_type
 
             # Skip task if AWS Managed
-            if obj_account_id == 'aws':
+            if obj_account_id == 'aws' and obj_resource_type == 'policy':
                 KLog.log("Can't action AWS managed policy: {0}, will not be retried".format(job[KEYS['arn']], "warn"))
                 continue
 
@@ -312,18 +317,22 @@ class KTask():
 
             # Collect params if we can classify and instantiate
             opts = {}
+            print job
             for k in job:
                 if k in KEYS.keys():  # collect valid ones
+                    print k
                     opts[k] = job[KEYS[k]]
 
             # Add the ARN object and role name
             opts['arn'] = arn_obj
             opts['krampus_role'] = self.krampus_role
 
+            print opts
+
             # task obj if/else series determines how the additional args outside action etc used
             t = KTask.Task(opts)
             if obj_service not in SERVICES:
-                KLog.log("got unrecognized aws object type: {0}".format(obj_service), "warn")
+                KLog.log("Got unrecognized AWS object type: {0}".format(obj_service), "warn")
                 continue  # don't append a non-existant task brah
 
             # add it to the list of things to action on
