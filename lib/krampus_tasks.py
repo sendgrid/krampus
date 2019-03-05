@@ -297,8 +297,8 @@ class KTask():
             obj_account_id = arn_obj.account_id
             obj_resource_type = arn_obj.resource_type
 
-            # Skip task if AWS Managed
-            if obj_account_id == 'aws' and obj_resource_type == 'policy':
+            # Skip task if AWS IAM Managed Policy
+            if obj_account_id == 'aws' and obj_service == 'iam' and obj_resource_type == 'policy':
                 KLog.log("Can't action AWS managed policy: {0}, will not be retried".format(job[KEYS['arn']], "warn"))
                 continue
 
