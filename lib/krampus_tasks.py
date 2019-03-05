@@ -121,9 +121,6 @@ class KTask():
             obj_resource = arn_obj.resource
             obj_resource_type = arn_obj.resource_type
 
-            # TEMPORARY
-            self.action = 'disable'
-
             # ebsvolume job
             if obj_service == "ec2" and obj_resource_type == "volume":
                 ebs_volume = obj_resource
@@ -149,7 +146,6 @@ class KTask():
                     resp = security_group.SecurityGroup(security_group_id, self.aws_region, self.session).kill()
                 elif self.action == "disable":
                     KLog.log("Pulling rule on: {0}".format(security_group_id))
-                    print self.job_params
                     resp = security_group.SecurityGroup(security_group_id, self.aws_region, self.session).disable(
                         self.job_params['cidr_range'],
                         self.job_params['from_port'],
@@ -317,17 +313,13 @@ class KTask():
 
             # Collect params if we can classify and instantiate
             opts = {}
-            print job
             for k in job:
                 if k in KEYS.keys():  # collect valid ones
-                    print k
                     opts[k] = job[KEYS[k]]
 
             # Add the ARN object and role name
             opts['arn'] = arn_obj
             opts['krampus_role'] = self.krampus_role
-
-            print opts
 
             # task obj if/else series determines how the additional args outside action etc used
             t = KTask.Task(opts)
