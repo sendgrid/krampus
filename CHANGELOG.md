@@ -1,7 +1,18 @@
-krampus CHANGELOG
+Krampus CHANGELOG
 ==================
 
-This file shows a change history for the krampus project
+This file shows a change history for the Krampus project
+
+0.3.7
+------
+- [Matthew] Replace Hipchat with Slack message notifications
+- [Matthew] Add the ability to set Slack channel using account\_mapping, otherwise use default 
+- [Matthew] Allows definition of account\_id in KLog.log() for account\_mapping 
+- [Matthew] Refactor resolveARN to utilize arnparse package for improved ARN detail
+- [Matthew] Update Task.complete() to utilize ARN.resource\_type instead of parsing 
+- [Matthew] Add check in getTasks to skip AWS Managed Policies 
+- [Matthew] Update minimum versions for botocore, pip, and requests
+- [Matthew] Update README.md and various formatting and comment updates
 
 0.3.6
 ------
