@@ -3,6 +3,10 @@ Krampus CHANGELOG
 
 This file shows a change history for the Krampus project
 
+0.3.8
+------
+- [Matthew] Update README.md with additional information referencing Justice Engine for the tasks.json file
+
 0.3.7
 ------
 - [Matthew] Replace Hipchat with Slack message notifications
